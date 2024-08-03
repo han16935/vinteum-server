@@ -1,40 +1,11 @@
 services:
-  vinteum-db:
-    image: mysql
-    container_name: vinteum-db
-    environment:
-      MYSQL_DATABASE: vinteum-db
-      MYSQL_ROOT_HOST: '%'
-      MYSQL_ROOT_PASSWORD: 'vinteum'
-      TZ: 'Asia/Seoul'
-    command:
-        ["mysqld", "--character-set-server=utf8mb4","--collation-server=utf8mb4_unicode_ci"]
-    volumes:
-      - vinteum-db-volume:/var/lib/mysql
-    networks:
-      - default
-    restart: on-failure
-
   vinteum-redis:
     image: redis:alpine
     container_name: vinteum-redis
     volumes:
       - ./redis.conf:/usr/local/etc/redis/redis.conf
     command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
-    networks:
-      - default
-    restart: on-failure
-
-  vinteum-test-db:
-    image: mysql
-    container_name: vinteum-test-db
-    environment:
-      MYSQL_DATABASE: vinteum-test-db
-      MYSQL_ROOT_HOST: '%'
-      MYSQL_ROOT_PASSWORD: 'vinteum'
-      TZ: 'Asia/Seoul'
-    networks:
-      - default
+    network_mode: "bridge"
     restart: on-failure
 
   vinteum-test-redis:
@@ -43,41 +14,67 @@ services:
     volumes:
       - ./redis-test.conf:/usr/local/etc/redis/redis-test.conf
     command: [ "redis-server", "/usr/local/etc/redis/redis-test.conf" ]
-    networks:
-      - default
+    network_mode: "bridge"
     restart: on-failure
 
   vinteum-server:
     image: han16935/vinteum-server
     container_name: vinteum-server
     build: .
+    environment:
+      DB_CONNECTION: 'host.docker.internal'
+      DB_NAME: 'vinteum-db'
+      DB_USERNAME: root
+      DB_PASSWORD: a1b2c3d4!
+
+      TEST_DB_CONNECTION: 'host.docker.internal'
+      TEST_DB_NAME: 'vinteum-test-db'
+      TEST_DB_USERNAME: root
+      TEST_DB_PASSWORD: a1b2c3d4!
+
+      REDIS_URL: 'vinteum-redis'
+      TEST_REDIS_URL: 'vinteum-test-redis'
+
+    network_mode: "bridge"
     ports:
       - "8080:8080"
-    environment:
-#      SPRING_DATASOURCE_URL: jdbc:mysql://vinteum-db:3306/vinteum-db?useSSL=false&allowPublicKeyRetrieval=true
-      SPRING_DATASOURCE_USERNAME: "root"
-      SPRING_DATASOURCE_PASSWORD: "vinteum"
-      DB_CONNECTION: 'vinteum-db'
-      DB_NAME: 'vinteum-db'
-      DB_USERNAME: 'root'
-      DB_PASSWORD: 'vinteum'
-      REDIS_URL: 'vinteum-redis'
 
-      TEST_DB_CONNECTION: 'vinteum-test-db'
-      TEST_DB_NAME: 'vinteum-test-db'
-      TEST_DB_USERNAME: 'root'
-      TEST_DB_PASSWORD: 'vinteum'
-      TEST_REDIS_URL: 'vinteum-test-redis'
     depends_on:
-      - vinteum-db
       - vinteum-redis
-      - vinteum-test-db
       - vinteum-test-redis
-    networks:
-      - default
-
-networks:
-  default:
 
 volumes:
   vinteum-db-volume:
+
+
+
+
+
+
+#  vinteum-db:
+#    image: mysql
+#    container_name: vinteum-db
+#    environment:
+#      MYSQL_DATABASE: vinteum-db
+#      MYSQL_ROOT_HOST: '%'
+#      MYSQL_ROOT_PASSWORD: 'vinteum'
+#      TZ: 'Asia/Seoul'
+#    command:
+#        ["mysqld", "--character-set-server=utf8mb4","--collation-server=utf8mb4_unicode_ci"]
+#    volumes:
+#      - vinteum-db-volume:/var/lib/mysql
+#    networks:
+#      - default
+#    restart: on-failure
+
+#  vinteum-test-db:
+#    image: mysql
+#    container_name: vinteum-test-db
+#    environment:
+#      MYSQL_DATABASE: vinteum-test-db
+#      MYSQL_ROOT_HOST: '%'
+#      MYSQL_ROOT_PASSWORD: 'vinteum'
+#      TZ: 'Asia/Seoul'
+#    networks:
+#      - default
+#    restart: on-failure
