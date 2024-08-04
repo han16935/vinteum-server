@@ -1,5 +1,6 @@
-package com.aiia.Vinteum;
+package com.aiia.Vinteum.group;
 
+import com.aiia.Vinteum.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -9,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @Table(name = "`group`")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Group extends BaseEntity{
+public class Group extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

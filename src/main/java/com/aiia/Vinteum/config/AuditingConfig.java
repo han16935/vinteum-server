@@ -1,4 +1,4 @@
-package com.aiia.Vinteum;
+package com.aiia.Vinteum.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;

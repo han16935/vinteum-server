@@ -1,4 +1,4 @@
-package com.aiia.Vinteum;
+package com.aiia.Vinteum.timetable;
 
 public enum TableType {
     NORMAL("일반"),

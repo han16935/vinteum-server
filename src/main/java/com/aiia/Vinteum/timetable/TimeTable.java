@@ -1,5 +1,7 @@
-package com.aiia.Vinteum;
+package com.aiia.Vinteum.timetable;
 
+import com.aiia.Vinteum.BaseEntity;
+import com.aiia.Vinteum.user.User;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -8,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class TimeTable extends BaseEntity{
+public class TimeTable extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
