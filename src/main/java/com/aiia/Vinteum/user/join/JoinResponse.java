@@ -1,4 +1,4 @@
-package com.aiia.Vinteum.user;
+package com.aiia.Vinteum.user.join;
 
 import lombok.Builder;
 import lombok.Getter;
