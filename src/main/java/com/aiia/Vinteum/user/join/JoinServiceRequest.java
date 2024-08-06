@@ -1,5 +1,6 @@
 package com.aiia.Vinteum.user.join;
 
+import com.aiia.Vinteum.user.User;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -7,22 +8,26 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class JoinServiceRequest {
-    private String name;
     private String userId;
     private String password;
+    private String name;
 
     @Builder
-    private JoinServiceRequest(String name, String userId, String password) {
-        this.name = name;
+    private JoinServiceRequest(String userId, String password, String name) {
         this.userId = userId;
         this.password = password;
+        this.name = name;
     }
 
-    public static JoinServiceRequest of(String name, String userId, String password){
+    public static JoinServiceRequest of(String userId, String password, String name){
         return JoinServiceRequest.builder()
-                .name(name)
                 .userId(userId)
                 .password(password)
+                .name(name)
                 .build();
+    }
+
+    public User toUser(){
+        return User.of(userId, password, name);
     }
 }

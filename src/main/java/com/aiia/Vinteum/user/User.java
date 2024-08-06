@@ -1,6 +1,7 @@
 package com.aiia.Vinteum.user;
 
 import com.aiia.Vinteum.BaseEntity;
+import com.aiia.Vinteum.user.join.JoinResponse;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -35,5 +36,9 @@ public class User extends BaseEntity {
                 .password(password)
                 .name(name)
                 .build();
+    }
+
+    public JoinResponse toJoinResponse(){
+        return JoinResponse.of(userId, name);
     }
 }

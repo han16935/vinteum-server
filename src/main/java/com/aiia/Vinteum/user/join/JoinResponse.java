@@ -7,19 +7,19 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class JoinResponse {
-    private String name;
     private String userId;
+    private String name;
 
     @Builder
-    private JoinResponse(String name, String userId) {
-        this.name = name;
+    private JoinResponse(String userId, String name) {
         this.userId = userId;
+        this.name = name;
     }
 
-    public static JoinResponse of(String name, String userId) {
+    public static JoinResponse of(String userId, String name) {
         return JoinResponse.builder()
-                .name(name)
                 .userId(userId)
+                .name(name)
                 .build();
     }
 }
