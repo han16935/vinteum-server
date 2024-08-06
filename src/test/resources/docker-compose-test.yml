@@ -1,0 +1,16 @@
+services:
+  vinteum-test-db:
+    image: 'mysql'
+    environment:
+      - MYSQL_DATABASE=vinteum-test-db
+      - MYSQL_ROOT_PASSWORD=password
+    ports:
+      - '3306'
+
+  vinteum-test-redis:
+    image: redis:alpine
+    volumes:
+      - ./redis-test.conf:/usr/local/etc/redis/redis.conf
+    command: [ "redis-server", "/usr/local/etc/redis/redis.conf" ]
+    ports:
+      - '16379'
