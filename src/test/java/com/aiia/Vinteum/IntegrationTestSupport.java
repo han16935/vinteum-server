@@ -5,22 +5,24 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.MySQLContainer;
-import org.testcontainers.junit.jupiter.Container;
-import org.testcontainers.junit.jupiter.Testcontainers;
 
-@Testcontainers
+
 @ActiveProfiles("test")
 @SpringBootTest
 public class IntegrationTestSupport {
-    private static final String DATABASE_VERSION = "mysql:latest";
+    private static final String MYSQL_VERSION = "mysql:latest";
 
-    @Container
-    protected static final MySQLContainer MYSQL_CONTAINER = new MySQLContainer(DATABASE_VERSION);
+    private static final MySQLContainer mysql;
+
+    static {
+      mysql = new MySQLContainer(MYSQL_VERSION);
+      mysql.start();
+    }
 
     @DynamicPropertySource
-    private static void dynamicConfiguration(DynamicPropertyRegistry registry){
-        registry.add("spring.datasource.url", MYSQL_CONTAINER::getJdbcUrl);
-        registry.add("spring.datasource.username", MYSQL_CONTAINER::getUsername);
-        registry.add("spring.datasource.password", MYSQL_CONTAINER::getPassword);
+    public static void dynamicConfiguration(DynamicPropertyRegistry registry) {
+        registry.add("spring.datasource.url", mysql::getJdbcUrl);
+        registry.add("spring.datasource.username", mysql::getUsername);
+        registry.add("spring.datasource.password", mysql::getPassword);
     }
 }
