@@ -15,8 +15,15 @@ public class UserService {
 
     public JoinResponse join(JoinServiceRequest req){
         if(userRepository.existsByName(req.getName())){
-            return null;
+            throw new IllegalArgumentException("중복된 ID입니다!");
         }
-        return null;
+
+        User begineer = req.toUser();
+
+        User savedUser = userRepository.save(begineer);
+
+        return savedUser.toJoinResponse();
     }
+
+
 }
