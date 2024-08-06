@@ -8,15 +8,6 @@ services:
     network_mode: "bridge"
     restart: on-failure
 
-  vinteum-test-redis:
-    image: redis:alpine
-    container_name: vinteum-test-redis
-    volumes:
-      - ./redis-test.conf:/usr/local/etc/redis/redis-test.conf
-    command: [ "redis-server", "/usr/local/etc/redis/redis-test.conf" ]
-    network_mode: "bridge"
-    restart: on-failure
-
   vinteum-server:
     image: han16935/vinteum-server
     container_name: vinteum-server
@@ -63,18 +54,6 @@ volumes:
 #        ["mysqld", "--character-set-server=utf8mb4","--collation-server=utf8mb4_unicode_ci"]
 #    volumes:
 #      - vinteum-db-volume:/var/lib/mysql
-#    networks:
-#      - default
-#    restart: on-failure
-
-#  vinteum-test-db:
-#    image: mysql
-#    container_name: vinteum-test-db
-#    environment:
-#      MYSQL_DATABASE: vinteum-test-db
-#      MYSQL_ROOT_HOST: '%'
-#      MYSQL_ROOT_PASSWORD: 'vinteum'
-#      TZ: 'Asia/Seoul'
 #    networks:
 #      - default
 #    restart: on-failure
