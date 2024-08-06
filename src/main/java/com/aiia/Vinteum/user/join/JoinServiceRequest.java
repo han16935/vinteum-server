@@ -1,9 +1,7 @@
 package com.aiia.Vinteum.user.join;
 
 import com.aiia.Vinteum.user.User;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Getter
 @NoArgsConstructor
