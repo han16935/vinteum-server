@@ -19,17 +19,21 @@ public class User extends BaseEntity {
 
     private String password;
 
+    private String name;
+
     @Builder
-    private User(Long id, String userId, String password) {
+    private User(Long id, String userId, String password, String name) {
         this.id = id;
         this.userId = userId;
         this.password = password;
+        this.name = name;
     }
 
-    public static User of(String userId, String password){
+    public static User of(String userId, String password, String name){
         return User.builder()
                 .userId(userId)
                 .password(password)
+                .name(name)
                 .build();
     }
 }
